@@ -1,6 +1,7 @@
 package africa.semicolon.uberdeluxe.controller;
 
 import africa.semicolon.uberdeluxe.data.dto.request.RegisterPassengerRequest;
+import africa.semicolon.uberdeluxe.data.dto.response.ApiResponse;
 import africa.semicolon.uberdeluxe.data.dto.response.RegisterResponse;
 import africa.semicolon.uberdeluxe.service.PassengerService;
 import africa.semicolon.uberdeluxe.service.PassengerServiceImpl;
@@ -40,5 +41,11 @@ public class PassengerController {
         }catch (Exception exception){
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
+    }
+
+    @DeleteMapping("{passengerId}")
+    public ResponseEntity<?> deletePassenger(@PathVariable Long passengerId){
+        passengerService.deletePassenger(passengerId);
+        return ResponseEntity.ok(ApiResponse.builder().message("Passenger deleted successfully"));
     }
 }
