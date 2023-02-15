@@ -1,7 +1,6 @@
 package africa.semicolon.uberdeluxe.mapper;
 
 import africa.semicolon.uberdeluxe.data.dto.request.RegisterPassengerRequest;
-import africa.semicolon.uberdeluxe.data.dto.response.RegisterResponse;
 import africa.semicolon.uberdeluxe.data.models.AppUser;
 import lombok.NoArgsConstructor;
 

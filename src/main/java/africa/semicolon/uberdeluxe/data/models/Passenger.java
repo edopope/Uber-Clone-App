@@ -1,5 +1,6 @@
 package africa.semicolon.uberdeluxe.data.models;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class Passenger {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
     @OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonUnwrapped
     private AppUser userDetails;
 
 

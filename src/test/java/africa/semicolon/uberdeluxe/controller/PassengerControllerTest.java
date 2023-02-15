@@ -45,7 +45,7 @@ class PassengerControllerTest {
 
             mockMvc.perform(post("/api/v1/passenger")
                     .content(jsonRequest)
-                            .
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().is(HttpStatus.CREATED.value()))
                     .andDo(print());
 
