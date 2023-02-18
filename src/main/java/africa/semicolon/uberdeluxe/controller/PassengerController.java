@@ -33,6 +33,12 @@ public class PassengerController {
         return ResponseEntity.status(HttpStatus.OK).body(foundPassenger);
     }
 
+    @GetMapping("/all/{pageNumber}")
+    public ResponseEntity<?> getAllPassengers(@PathVariable int pageNumber){
+        var response =  passengerService.getAllPassenger(pageNumber);
+        return ResponseEntity.ok(response.getContent());
+    }
+
     @PatchMapping(value = "{passengerId}", consumes = "application/json-patch+json")
     public ResponseEntity<?> updatePassenger(@PathVariable Long passengerId, @RequestBody JsonPatch updatePatch){
         try {
@@ -46,6 +52,8 @@ public class PassengerController {
     @DeleteMapping("{passengerId}")
     public ResponseEntity<?> deletePassenger(@PathVariable Long passengerId){
         passengerService.deletePassenger(passengerId);
-        return ResponseEntity.ok(ApiResponse.builder().message("Passenger deleted successfully"));
+        return ResponseEntity.ok("Passenger deleted successfully");
     }
+
+
 }

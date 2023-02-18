@@ -15,6 +15,9 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,7 @@ import java.time.LocalDateTime;
 public class PassengerServiceImpl implements PassengerService{
 
     private final PassengerRepository passengerRepository;
+    private static final int NUMBER_OF_ITEMS_PER_PAGE = 3;
     @Override
     public RegisterResponse register(RegisterPassengerRequest registerRequest) {
         AppUser appUser = ParaMapper.map(registerRequest);
@@ -63,6 +67,14 @@ public class PassengerServiceImpl implements PassengerService{
             log.error(e.getMessage());
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public Page<Passenger> getAllPassenger(int pageNumber) {
+        if (pageNumber<1) pageNumber = 0;
+        else pageNumber=pageNumber-1;
+        Pageable pageable = PageRequest.of(pageNumber, NUMBER_OF_ITEMS_PER_PAGE);
+        return passengerRepository.findAll(pageable);
     }
 
     @Override
