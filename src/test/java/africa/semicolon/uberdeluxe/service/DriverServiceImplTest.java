@@ -34,7 +34,8 @@ class DriverServiceImplTest {
         MockMultipartFile file =
                 new MockMultipartFile("test_license",
                         new FileInputStream("/home/semicolon/Documents/spring-projects/uberdeluxe/src/main/resources/static/balablu.jpeg"));
-        var response = driverService.register(request, file);
+        request.setLicenseImage(file);
+        var response = driverService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.isSuccess()).isTrue();
         assertThat(response.getCode()).isEqualTo(HttpStatus.CREATED.value());

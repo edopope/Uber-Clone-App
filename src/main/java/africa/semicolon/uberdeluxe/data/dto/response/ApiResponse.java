@@ -9,5 +9,6 @@ import lombok.*;
 @Getter
 @Setter
 public class ApiResponse {
+    private int status;
     private String message;
 }

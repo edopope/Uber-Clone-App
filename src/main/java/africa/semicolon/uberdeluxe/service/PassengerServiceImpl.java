@@ -1,8 +1,8 @@
 package africa.semicolon.uberdeluxe.service;
 
+import africa.semicolon.uberdeluxe.cloud.CloudService;
 import africa.semicolon.uberdeluxe.data.dto.request.RegisterPassengerRequest;
 import africa.semicolon.uberdeluxe.data.dto.response.RegisterResponse;
-import africa.semicolon.uberdeluxe.data.dto.response.UpdatePassengerResponse;
 import africa.semicolon.uberdeluxe.data.models.AppUser;
 import africa.semicolon.uberdeluxe.data.models.Passenger;
 import africa.semicolon.uberdeluxe.data.repositories.PassengerRepository;
@@ -14,23 +14,24 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static africa.semicolon.uberdeluxe.util.AppUtilities.NUMBER_OF_ITEMS_PER_PAGE;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class PassengerServiceImpl implements PassengerService{
-
     private final PassengerRepository passengerRepository;
-    private static final int NUMBER_OF_ITEMS_PER_PAGE = 3;
+    private final CloudService cloudService;
+
     @Override
     public RegisterResponse register(RegisterPassengerRequest registerRequest) {
         AppUser appUser = ParaMapper.map(registerRequest);
@@ -50,9 +51,20 @@ public class PassengerServiceImpl implements PassengerService{
     }
 
     @Override
+    public void savePassenger(Passenger passenger) {
+        passengerRepository.save(passenger);
+    }
+
+    @Override
+    public Optional<Passenger> getPassengerBy(Long passengerId) {
+        return passengerRepository.findById(passengerId);
+    }
+
+    @Override
     public Passenger updatePassenger(Long passengerId, JsonPatch updatePayload) {
         ObjectMapper mapper = new ObjectMapper();
         Passenger foundPassenger = getPassengerById(passengerId);
+        AppUser passengerDetails = foundPassenger.getUserDetails();
         //Passenger Object to node
         JsonNode node = mapper.convertValue(foundPassenger, JsonNode.class);
         try {

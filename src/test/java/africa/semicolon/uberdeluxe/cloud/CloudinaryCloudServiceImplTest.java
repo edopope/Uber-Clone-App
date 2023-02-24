@@ -33,7 +33,6 @@ class CloudinaryCloudServiceImplTest {
     @Test
     void uploadTest() {
         var cloudinaryImageUrl = cloudService.upload(file);
-        log.info("img_url::{}", cloudinaryImageUrl);
         assertThat(cloudinaryImageUrl).isNotNull();
     }
 }

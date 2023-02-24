@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/passenger")
@@ -39,7 +40,7 @@ public class PassengerController {
         return ResponseEntity.ok(response.getContent());
     }
 
-    @PatchMapping(value = "{passengerId}", consumes = "application/json-patch+json")
+    @PatchMapping(value = "{passengerId}", consumes = {"application/json-patch+json"})
     public ResponseEntity<?> updatePassenger(@PathVariable Long passengerId, @RequestBody JsonPatch updatePatch){
         try {
             var response = passengerService.updatePassenger(passengerId, updatePatch);

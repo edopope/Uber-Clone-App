@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class MailjetMailServiceImpl implements MailService{
+public class MailServiceImpl implements MailService{
 
     private final MailConfig mailConfig;
 

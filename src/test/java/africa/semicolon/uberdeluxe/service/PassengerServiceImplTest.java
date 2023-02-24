@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,8 +29,9 @@ class PassengerServiceImplTest {
     @Autowired
     private PassengerService passengerService;
     private RegisterPassengerRequest request;
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         request = new RegisterPassengerRequest();
         request.setEmail("test@email.com");
         request.setPassword("testPassword");

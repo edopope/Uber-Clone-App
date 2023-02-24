@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,6 @@ public class CloudinaryCloudServiceImpl implements CloudService{
         try {
             Map<?, ?> response =
                     cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-            log.info("response::{}", response);
             return response.get("url").toString();
         } catch (IOException e) {
             throw new ImageUploadException(e.getMessage());
