@@ -149,7 +149,6 @@ public class PassengerServiceImpl implements PassengerService{
                 +"&key="+directionConfig.getGoogleApiKey();
     }
 
-
     private static RegisterResponse getRegisterResponse(Passenger savedPassenger) {
         RegisterResponse registerResponse = new RegisterResponse();
         registerResponse.setId(savedPassenger.getId());
@@ -157,13 +156,4 @@ public class PassengerServiceImpl implements PassengerService{
         registerResponse.setMessage("User Registration Successful");
         return registerResponse;
     }
-
-//    public static void main(String[] args) {
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        var response = restTemplate.getForEntity("https://maps.googleapis.com/maps/api/distancematrix/json?" +
-//                "destinations=312 Herbert Macaulay Way, Yaba, Lagos"+"&origins=371, Herbert Macaulay Way, Yaba, Lagos&mode=driving" +
-//                "&traffic_model=pessimistic&departure_time=1678719940&key=AIzaSyBPpKJBKwHnn6snUPbsglcKPC7kEXy7Juc", GoogleDistanceResponse.class);
-//        System.out.println(response);
-//    }
 }
