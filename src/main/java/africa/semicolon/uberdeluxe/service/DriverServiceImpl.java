@@ -7,6 +7,7 @@ import africa.semicolon.uberdeluxe.data.dto.request.RegisterDriverRequest;
 import africa.semicolon.uberdeluxe.data.dto.response.RegisterResponse;
 import africa.semicolon.uberdeluxe.data.models.AppUser;
 import africa.semicolon.uberdeluxe.data.models.Driver;
+import africa.semicolon.uberdeluxe.data.models.Role;
 import africa.semicolon.uberdeluxe.data.repositories.DriverRepository;
 import africa.semicolon.uberdeluxe.exception.ImageUploadException;
 import africa.semicolon.uberdeluxe.notification.MailService;
@@ -15,9 +16,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -30,13 +33,18 @@ public class DriverServiceImpl implements DriverService{
     private final ModelMapper modelMapper;
 
     private final MailService mailService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public RegisterResponse register(RegisterDriverRequest request) {
         AppUser driverDetails = modelMapper.map(request, AppUser.class);
+        driverDetails.setPassword(passwordEncoder.encode(request.getPassword()));
         driverDetails.setCreatedAt(LocalDateTime.now().toString());
+        driverDetails.setRoles(new HashSet<>());
+        driverDetails.getRoles().add(Role.DRIVER);
         //steps
         //1. upload drivers license image
+
         var imageUrl = cloudService.upload(request.getLicenseImage());
         if (imageUrl==null)
             throw new ImageUploadException("Driver Registration failed");
@@ -52,7 +60,6 @@ public class DriverServiceImpl implements DriverService{
         String response = mailService.sendHtmlMail(emailRequest);
         if (response==null) return getRegisterFailureResponse();
         return RegisterResponse.builder()
-                .code(HttpStatus.CREATED.value())
                 .id(savedDriver.getId())
                 .isSuccess(true)
                 .message("Driver Registration Successful")
@@ -61,7 +68,6 @@ public class DriverServiceImpl implements DriverService{
 
     private static RegisterResponse getRegisterFailureResponse() {
         return RegisterResponse.builder()
-                .code(HttpStatus.BAD_REQUEST.value())
                 .id(-1L)
                 .isSuccess(false)
                 .message("Driver Registration Failed")

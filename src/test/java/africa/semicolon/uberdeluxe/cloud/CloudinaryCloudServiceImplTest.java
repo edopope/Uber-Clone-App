@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static africa.semicolon.uberdeluxe.util.AppUtilities.UBER_DELUXE_TEST_IMAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +28,7 @@ class CloudinaryCloudServiceImplTest {
     void setUp() throws IOException {
         file =
                 new MockMultipartFile("puppy",
-                        new FileInputStream("/home/semicolon/Documents/spring-projects/uberdeluxe/src/test/resources/puppy.jpeg"));
+                        new FileInputStream(UBER_DELUXE_TEST_IMAGE));
     }
 
     @Test

@@ -1,14 +1,16 @@
 package africa.semicolon.uberdeluxe.data.dto.response;
 
+
 import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
-public class RegisterResponse {
-    private Long id;
-    private String message;
-    private boolean isSuccess;
+@ToString
+public class Fare {
+    private String currency;
+    private double value;
+
+    private String text;
 }

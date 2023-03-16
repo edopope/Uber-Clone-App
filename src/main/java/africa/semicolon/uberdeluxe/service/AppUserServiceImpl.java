@@ -1,25 +1,35 @@
 package africa.semicolon.uberdeluxe.service;
 
 import africa.semicolon.uberdeluxe.cloud.CloudService;
+import africa.semicolon.uberdeluxe.config.security.users.SecureUser;
 import africa.semicolon.uberdeluxe.data.dto.response.ApiResponse;
+import africa.semicolon.uberdeluxe.data.models.AppUser;
 import africa.semicolon.uberdeluxe.data.models.Driver;
 import africa.semicolon.uberdeluxe.data.models.Passenger;
+import africa.semicolon.uberdeluxe.data.repositories.AppUserRepository;
 import africa.semicolon.uberdeluxe.exception.BusinessLogicException;
 import africa.semicolon.uberdeluxe.exception.UserNotFoundException;
 import africa.semicolon.uberdeluxe.util.AppUtilities;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
+import static africa.semicolon.uberdeluxe.exception.ExceptionMessage.USER_WITH_ID_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
-public class AppUserServiceImpl implements AppUserService{
-    private PassengerService passengerService;
-    private DriverService driverService;
+public class AppUserServiceImpl implements AppUserService {
+    private final PassengerService passengerService;
+    private final DriverService driverService;
     private final CloudService cloudService;
+
+    private final AppUserRepository appUserRepository;
 
     @Override
     public ApiResponse uploadProfileImage(MultipartFile profileImage, Long userId) {
@@ -28,14 +38,13 @@ public class AppUserServiceImpl implements AppUserService{
         foundPassenger = findPassenger(userId);
         if (foundPassenger.isEmpty()) foundDriver = findDriver(userId);
         if (foundPassenger.isEmpty()&&foundDriver.isEmpty()) throw new UserNotFoundException(
-                String.format("user with id %d not found", userId)
+                String.format(USER_WITH_ID_NOT_FOUND.getMessage(), userId)
         );
         String imageUrl = cloudService.upload(profileImage);
         foundPassenger.ifPresent(passenger -> updatePassengerProfileImage(imageUrl, passenger));
         foundDriver.ifPresent(driver -> updateDriverProfileImage(imageUrl, driver));
 
         return ApiResponse.builder()
-                .status(HttpStatus.OK.value())
                 .message("SUCCESS")
                 .build();
     }
@@ -63,13 +72,12 @@ public class AppUserServiceImpl implements AppUserService{
         foundPassenger = findPassenger(userId);
         if (foundPassenger.isEmpty()) foundDriver = findDriver(userId);
         if (foundDriver.isEmpty()&&foundPassenger.isEmpty()) throw new UserNotFoundException(
-                String.format("user with id %d not found", userId)
+                String.format(USER_WITH_ID_NOT_FOUND.getMessage(), userId)
         );
         foundDriver.ifPresent(driver -> enableDriverAccount(driver));
         foundPassenger.ifPresent(passenger -> enablePassengerAccount(passenger));
         return ApiResponse.builder()
                 .message("success")
-                .status(HttpStatus.OK.value())
                 .build();
     }
 
@@ -94,4 +102,9 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
 
+
+    public AppUser getByEmail(String email){
+        return appUserRepository.findByEmail(email)
+                .orElseThrow(()->new UsernameNotFoundException("user with email not found"));
+    }
 }

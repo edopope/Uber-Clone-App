@@ -1,14 +1,15 @@
 package africa.semicolon.uberdeluxe.data.dto.response;
 
+
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
-public class RegisterResponse {
-    private Long id;
-    private String message;
-    private boolean isSuccess;
+@ToString
+public class DistanceMatrixRow {
+    private List<DistanceMatrixElement> elements;
 }

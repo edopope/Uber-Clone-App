@@ -1,6 +1,6 @@
 package africa.semicolon.uberdeluxe.notification;
 
-import africa.semicolon.uberdeluxe.config.MailConfig;
+import africa.semicolon.uberdeluxe.config.mail.MailConfig;
 import africa.semicolon.uberdeluxe.data.dto.request.EmailNotificationRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

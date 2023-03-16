@@ -1,6 +1,5 @@
 package africa.semicolon.uberdeluxe.cloud;
 
-import africa.semicolon.uberdeluxe.exception.BusinessLogicException;
 import africa.semicolon.uberdeluxe.exception.ImageUploadException;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Service
 @AllArgsConstructor

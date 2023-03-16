@@ -1,6 +1,9 @@
 package africa.semicolon.uberdeluxe.service;
 
+import africa.semicolon.uberdeluxe.data.dto.request.BookRideRequest;
+import africa.semicolon.uberdeluxe.data.dto.request.Location;
 import africa.semicolon.uberdeluxe.data.dto.request.RegisterPassengerRequest;
+import africa.semicolon.uberdeluxe.data.dto.response.ApiResponse;
 import africa.semicolon.uberdeluxe.data.dto.response.RegisterResponse;
 import africa.semicolon.uberdeluxe.data.models.AppUser;
 import africa.semicolon.uberdeluxe.data.models.Passenger;
@@ -12,11 +15,11 @@ import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jackson.jsonpointer.JsonPointerException;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.ReplaceOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
+@Slf4j
 class PassengerServiceImplTest {
     @Autowired
     private PassengerService passengerService;
@@ -42,8 +46,6 @@ class PassengerServiceImplTest {
     void registerTest() {
         RegisterResponse registerResponse = passengerService.register(request);
         assertThat(registerResponse).isNotNull();
-        assertThat(registerResponse.getCode())
-                .isEqualTo(HttpStatus.CREATED.value());
     }
 
     @Test
@@ -75,6 +77,23 @@ class PassengerServiceImplTest {
        passengerService.deletePassenger(response.getId());
        assertThrows(BusinessLogicException.class, ()->passengerService.getPassengerById(response.getId()));
 
+    }
+
+    @Test
+    public void bookRide(){
+        RegisterResponse response = passengerService.register(request);
+        BookRideRequest bookRideRequest = buildBookRideRequest(response.getId());
+        ApiResponse bookRideResponse = passengerService.bookRide(bookRideRequest);
+        log.info("response->{}", bookRideResponse);
+        assertThat(bookRideResponse).isNotNull();
+    }
+
+    private BookRideRequest buildBookRideRequest(Long passengerId){
+        BookRideRequest bookRideRequest = new BookRideRequest();
+        bookRideRequest.setPassengerId(passengerId);
+        bookRideRequest.setOrigin(new Location("312", "Herbert Macaulay Way", "Yaba", "Lagos"));
+        bookRideRequest.setDestination(new Location("371", "Herbert Macaulay Way", "Yaba", "Lagos"));
+        return bookRideRequest;
     }
 
 }

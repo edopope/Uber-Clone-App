@@ -1,6 +1,8 @@
 package africa.semicolon.uberdeluxe.service;
 
+import africa.semicolon.uberdeluxe.data.dto.request.BookRideRequest;
 import africa.semicolon.uberdeluxe.data.dto.request.RegisterPassengerRequest;
+import africa.semicolon.uberdeluxe.data.dto.response.ApiResponse;
 import africa.semicolon.uberdeluxe.data.dto.response.RegisterResponse;
 import africa.semicolon.uberdeluxe.data.models.Passenger;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -19,4 +21,6 @@ public interface PassengerService {
     Page<Passenger> getAllPassenger(int pageNumber);
 
     void deletePassenger(Long id);
+
+    ApiResponse bookRide(BookRideRequest bookRideRequest);
 }

@@ -21,10 +21,11 @@ class MailjetMailServiceImplTest {
     @BeforeEach
     void setUp() {
         List<Recipient> to = List.of(
-                new Recipient("dean", "o.michaeldean@gmail.com")
+                new Recipient("dean", "bonel60110@orgria.com")
         );
         emailNotificationRequest=new EmailNotificationRequest();
         emailNotificationRequest.setTo(to);
+        emailNotificationRequest.setHtmlContent("Hello");
     }
 
     @Test

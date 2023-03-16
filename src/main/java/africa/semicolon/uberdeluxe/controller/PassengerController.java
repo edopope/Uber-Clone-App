@@ -24,7 +24,7 @@ public class PassengerController {
     @PostMapping
     public ResponseEntity<?> register(@RequestBody RegisterPassengerRequest registerPassengerRequest){
         RegisterResponse registerResponse = passengerService.register(registerPassengerRequest);
-        return ResponseEntity.status(registerResponse.getCode()).body(registerResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse);
     }
 
 

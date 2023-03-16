@@ -26,7 +26,6 @@ public class AppUserController {
         }catch (BusinessLogicException exception){
             return ResponseEntity.badRequest().body(
                     ApiResponse.builder()
-                            .status(HttpStatus.BAD_REQUEST.value())
                             .message(exception.getMessage())
                             .build()
             );
@@ -41,7 +40,6 @@ public class AppUserController {
         }catch (BusinessLogicException exception){
             return ResponseEntity.badRequest().body(
                     ApiResponse.builder()
-                            .status(HttpStatus.BAD_REQUEST.value())
                             .message(exception.getMessage())
                             .build()
             );
