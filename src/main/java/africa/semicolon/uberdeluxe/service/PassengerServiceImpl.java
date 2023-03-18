@@ -119,11 +119,14 @@ public class PassengerServiceImpl implements PassengerService{
     @Override
     public ApiResponse bookRide(BookRideRequest bookRideRequest) {
         //1. find passenger
-       getPassengerById(bookRideRequest.getPassengerId());
+       Passenger foundPassenger = getPassengerById(bookRideRequest.getPassengerId());
+       if (foundPassenger==null) throw new BusinessLogicException(
+               String.format("passenger with id %d not found", bookRideRequest.getPassengerId())
+       );
         //2. calculate distance between origin and destination
-        DistanceMatrixElement distanceInformation = getDistanceInformation(bookRideRequest.getOrigin(), bookRideRequest.getDestination());
+       DistanceMatrixElement distanceInformation = getDistanceInformation(bookRideRequest.getOrigin(), bookRideRequest.getDestination());
         //3. calculate eta
-        var eta = distanceInformation.getDuration().getText();
+        String eta = distanceInformation.getDuration().getText();
         //4. calculate price
         BigDecimal fare = AppUtilities.calculateRideFare(distanceInformation.getDistance().getText());
         return ApiResponse.builder().fare(fare).estimatedTimeOfArrival(eta).build();
