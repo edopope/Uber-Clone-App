@@ -69,7 +69,7 @@ public class UberDeluxeAuthenticationFilter extends UsernamePasswordAuthenticati
         ObjectMapper mapper = new ObjectMapper();
 
         Map<String, Object> claims = authResult.getAuthorities().stream()
-                        .collect(Collectors.toMap(GrantedAuthority::getAuthority, v->v));
+                        .collect(Collectors.toMap(k->"claim", v->v));
 
         String accessToken = Jwts.builder()
                                 .setIssuer("uber_deluxe")
