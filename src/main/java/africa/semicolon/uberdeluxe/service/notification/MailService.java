@@ -1,4 +1,4 @@
-package africa.semicolon.uberdeluxe.notification;
+package africa.semicolon.uberdeluxe.service.notification;
 
 import africa.semicolon.uberdeluxe.data.dto.request.EmailNotificationRequest;
 

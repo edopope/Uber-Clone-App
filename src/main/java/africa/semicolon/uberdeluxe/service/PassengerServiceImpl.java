@@ -1,6 +1,6 @@
 package africa.semicolon.uberdeluxe.service;
 
-import africa.semicolon.uberdeluxe.cloud.CloudService;
+import africa.semicolon.uberdeluxe.service.cloud.CloudService;
 import africa.semicolon.uberdeluxe.config.distance.DistanceConfig;
 import africa.semicolon.uberdeluxe.data.dto.request.BookRideRequest;
 import africa.semicolon.uberdeluxe.data.dto.request.Location;
@@ -25,14 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashSet;
@@ -48,6 +46,7 @@ public class PassengerServiceImpl implements PassengerService{
     private final PassengerRepository passengerRepository;
     private final CloudService cloudService;
 
+    private MockLocationService mockLocationService;
     private final PasswordEncoder passwordEncoder;
     private final DistanceConfig directionConfig;
 
@@ -124,7 +123,10 @@ public class PassengerServiceImpl implements PassengerService{
                String.format("passenger with id %d not found", bookRideRequest.getPassengerId())
        );
         //2. calculate distance between origin and destination
-       DistanceMatrixElement distanceInformation = getDistanceInformation(bookRideRequest.getOrigin(), bookRideRequest.getDestination());
+        var response = mockLocationService.getDistanceInformation(bookRideRequest.getOrigin(), bookRideRequest.getDestination());
+       DistanceMatrixElement distanceInformation = response.getRows().get(0).getElements().get(0);
+//               getDistanceInformation(bookRideRequest.getOrigin(), bookRideRequest.getDestination());
+        log.info("response!!->{}", distanceInformation);
         //3. calculate eta
         String eta = distanceInformation.getDuration().getText();
         //4. calculate price

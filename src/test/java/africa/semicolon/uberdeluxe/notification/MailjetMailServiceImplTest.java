@@ -2,6 +2,7 @@ package africa.semicolon.uberdeluxe.notification;
 
 import africa.semicolon.uberdeluxe.data.dto.request.EmailNotificationRequest;
 import africa.semicolon.uberdeluxe.data.dto.request.Recipient;
+import africa.semicolon.uberdeluxe.service.notification.MailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

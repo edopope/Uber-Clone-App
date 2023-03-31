@@ -1,7 +1,6 @@
 package africa.semicolon.uberdeluxe.service;
 
-import africa.semicolon.uberdeluxe.cloud.CloudService;
-import africa.semicolon.uberdeluxe.config.security.users.SecureUser;
+import africa.semicolon.uberdeluxe.service.cloud.CloudService;
 import africa.semicolon.uberdeluxe.data.dto.response.ApiResponse;
 import africa.semicolon.uberdeluxe.data.models.AppUser;
 import africa.semicolon.uberdeluxe.data.models.Driver;
@@ -11,9 +10,6 @@ import africa.semicolon.uberdeluxe.exception.BusinessLogicException;
 import africa.semicolon.uberdeluxe.exception.UserNotFoundException;
 import africa.semicolon.uberdeluxe.util.AppUtilities;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

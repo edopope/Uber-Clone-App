@@ -1,4 +1,4 @@
-package africa.semicolon.uberdeluxe.cloud;
+package africa.semicolon.uberdeluxe.service.cloud;
 
 import africa.semicolon.uberdeluxe.exception.ImageUploadException;
 import com.cloudinary.Cloudinary;

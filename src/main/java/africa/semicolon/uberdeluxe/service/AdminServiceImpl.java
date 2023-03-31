@@ -3,20 +3,16 @@ package africa.semicolon.uberdeluxe.service;
 import africa.semicolon.uberdeluxe.data.dto.request.EmailNotificationRequest;
 import africa.semicolon.uberdeluxe.data.dto.request.InviteAdminRequest;
 import africa.semicolon.uberdeluxe.data.dto.request.Recipient;
-import africa.semicolon.uberdeluxe.data.dto.response.AdminResponse;
 import africa.semicolon.uberdeluxe.data.dto.response.ApiResponse;
 import africa.semicolon.uberdeluxe.data.models.Admin;
 import africa.semicolon.uberdeluxe.data.models.AppUser;
 import africa.semicolon.uberdeluxe.data.repositories.AdminRepository;
-import africa.semicolon.uberdeluxe.data.repositories.AppUserRepository;
 import africa.semicolon.uberdeluxe.exception.BusinessLogicException;
-import africa.semicolon.uberdeluxe.notification.MailService;
+import africa.semicolon.uberdeluxe.service.notification.MailService;
 import africa.semicolon.uberdeluxe.util.AppUtilities;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
 
 @Service

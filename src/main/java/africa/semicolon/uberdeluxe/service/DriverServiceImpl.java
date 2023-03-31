@@ -1,6 +1,6 @@
 package africa.semicolon.uberdeluxe.service;
 
-import africa.semicolon.uberdeluxe.cloud.CloudService;
+import africa.semicolon.uberdeluxe.service.cloud.CloudService;
 import africa.semicolon.uberdeluxe.data.dto.request.EmailNotificationRequest;
 import africa.semicolon.uberdeluxe.data.dto.request.Recipient;
 import africa.semicolon.uberdeluxe.data.dto.request.RegisterDriverRequest;
@@ -10,12 +10,11 @@ import africa.semicolon.uberdeluxe.data.models.Driver;
 import africa.semicolon.uberdeluxe.data.models.Role;
 import africa.semicolon.uberdeluxe.data.repositories.DriverRepository;
 import africa.semicolon.uberdeluxe.exception.ImageUploadException;
-import africa.semicolon.uberdeluxe.notification.MailService;
+import africa.semicolon.uberdeluxe.service.notification.MailService;
 import africa.semicolon.uberdeluxe.util.AppUtilities;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

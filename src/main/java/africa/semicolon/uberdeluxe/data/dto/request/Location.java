@@ -1,15 +1,13 @@
 package africa.semicolon.uberdeluxe.data.dto.request;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Location {
     private String houseNumber;
     private String street;

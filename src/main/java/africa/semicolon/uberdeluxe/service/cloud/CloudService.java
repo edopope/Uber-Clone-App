@@ -1,4 +1,4 @@
-package africa.semicolon.uberdeluxe.cloud;
+package africa.semicolon.uberdeluxe.service.cloud;
 
 import org.springframework.web.multipart.MultipartFile;
 
